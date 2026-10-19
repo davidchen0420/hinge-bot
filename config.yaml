@@ -1,0 +1,36 @@
+# Hinge Premium allows unlimited likes, but large daily volumes are the clearest bot
+# signal. Start low and raise it gradually if the account stays healthy.
+daily_like_cap: 50
+delay_between_profiles_sec: [20, 60]
+
+# true = you approve or edit every opener in the terminal before it is sent.
+# Leave it on for the first few sessions, then turn it off.
+review_mode: true
+
+model: claude-opus-5-5
+device_serial: ""   # blank = the only connected phone; see `adb devices`
+
+# Set age 22-28 and ethnicity East Asian as dealbreakers in Hinge's own
+# preferences too. Hinge's filters do most of the work; these are extra checks.
+criteria: |
+  - Age 22-28. Skip if her listed age is outside that range.
+  - If she lists ethnicity, prefer East Asian; skip if she lists something else.
+  - Like profiles with real effort: thoughtful prompts, hobbies, personality.
+  - Skip profiles with only 1-2 photos and no prompt answers.
+  # Add your own: interests, lifestyle (drinking/smoking), wants kids, religion, etc.
+
+about_me: |
+  # Fill this in so openers can draw on real common ground. Example:
+  # 27, software engineer in SF. Into climbing, cooking Sichuan food, film photography,
+  # and trying every ramen spot in the city. Dry sense of humor.
+
+# UI selectors tried before falling back to vision. Run `python hinge_bot.py inspect`
+# on each screen to confirm or adjust them for your Hinge version.
+selectors:
+  skip:
+    - {description: "Skip"}
+    - {descriptionContains: "Skip"}
+  send_like:
+    - {textMatches: "(?i)send like"}
+    - {descriptionMatches: "(?i)send like"}
+    - {textMatches: "(?i)^send$"}
